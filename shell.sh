@@ -24,6 +24,8 @@ alias open=xdg-open
 alias sai='sudo apt install'
 NUM_CPUS="$(nproc --all)"
 
+alias i='[[ -e lib.rs ]] && vim lib.rs || vim init.lua'
+
 # cd to parent dir of given path
 cdd() {
     if [ $# -ne 1 ]
@@ -61,7 +63,7 @@ alias gcpx='git cherry-pick -x'
 alias zr='nvim ~/.zshrc'
 alias br='nvim ~/.bashrc'
 
-# Rust setup
+# rust setup
 
 # If cargo build uses all CPUs,
 # it becomes hard to browse anything else
@@ -92,13 +94,40 @@ then
     . "$HOME/.cargo/env"
 fi
 
-# Shell setup
+export RUST_BACKTRACE=1
+
+alias c='vim Cargo.toml'
+alias cc='vim ../Cargo.toml'
+alias ccc='vim ../../Cargo.toml'
+alias cccc='vim ../../../Cargo.toml'
+
+alias b='vim build.rs'
+alias bb='vim ../build.rs'
+alias bbb='vim ../../build.rs'
+alias bbbb='vim ../../../build.rs'
+
+# java setup
+alias o='vim pom.xml'
+alias oo='vim ../pom.xml'
+alias ooo='vim ../../pom.xml'
+alias oooo='vim ../../../pom.xml'
+
+# go setup
+alias g='vim go.mod'
+alias gg='vim ../go.mod'
+alias ggg='vim ../../go.mod'
+alias gggg='vim ../../../go.mod'
+
+# shell-setup
 alias sc='nvim $SHELL_SETUP_PATH/shell.sh'
 
 # My tools
 . "$MY_TOOLS_PATH"/src/backup_rm.sh
 alias mt='cd "$MY_TOOLS_PATH"'
-export PATH="$MY_TOOLS_PATH/bin:$PATH"
+export PATH="$PATH:$MY_TOOLS_PATH/bin"
 
 # playground
 . "$SHELL_SETUP_PATH/playground/playground.sh"
+
+# Paths
+export PATH="$PATH:$HOME/.local/bin"
