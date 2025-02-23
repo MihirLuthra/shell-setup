@@ -8,9 +8,13 @@ fi
 
 declare -A default_boilerplate_dirs
 default_boilerplate_dirs[go]="$PLAYGROUND_DIR/boilerplates/basic_go"
+default_boilerplate_dirs[c]="$PLAYGROUND_DIR/boilerplates/basic_c"
+default_boilerplate_dirs[cpp]="$PLAYGROUND_DIR/boilerplates/basic_cpp"
 default_boilerplate_dirs[rust]="$PLAYGROUND_DIR/boilerplates/basic_rust"
 default_boilerplate_dirs[java]="$PLAYGROUND_DIR/boilerplates/basic_java"
 default_boilerplate_dirs[java-mvn]="$PLAYGROUND_DIR/boilerplates/basic_java_mvn"
+default_boilerplate_dirs[general]="$PLAYGROUND_DIR/boilerplates/general"
+default_boilerplate_dirs[qemu]="$PLAYGROUND_DIR/boilerplates/basic_qemu"
 
 setup_playground() {
     if [ $# -lt 2 ]; then
@@ -88,6 +92,10 @@ setup_playground() {
 alias pgo='setup_playground "$HOME/playground/go" "go"'
 alias prust='setup_playground "$HOME/playground/rust" "rust"'
 alias pjava='setup_playground "$HOME/playground/java" "java-mvn"'
+alias pgeneral='setup_playground "$HOME/playground/general" "general"'
+alias pqemu='setup_playground "$HOME/playground/qemu" "qemu"'
+alias pc='setup_playground "$HOME/playground/c" "c"'
+alias pcpp='setup_playground "$HOME/playground/cpp" "cpp"'
 
 alias jc='javac ${PLAYGROUND_JAVA_NAME}.java'
 alias jr='java ${PLAYGROUND_JAVA_NAME}'

@@ -23,7 +23,8 @@ fi
 alias open=xdg-open
 alias sai='sudo apt install'
 NUM_CPUS="$(nproc --all)"
-
+export MY_REPOS_PATH="$HOME/repos"
+alias q="cd $MY_REPOS_PATH"
 alias i='[[ -e lib.rs ]] && vim lib.rs || vim init.lua'
 
 # cd to parent dir of given path
@@ -117,6 +118,8 @@ alias g='vim go.mod'
 alias gg='vim ../go.mod'
 alias ggg='vim ../../go.mod'
 alias gggg='vim ../../../go.mod'
+export PATH="$HOME/my_tools/src/go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 # shell-setup
 alias sc='nvim $SHELL_SETUP_PATH/shell.sh'

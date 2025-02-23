@@ -42,7 +42,7 @@ open_prefix() {
         echo_err "No files matching '$prefix.*' found."
         return 1
     elif [ ${#matches[@]} -eq 1 ]; then
-        vim "$matches"
+        nvim "$matches"
     else
         echo_err "Multiple files matching '$prefix.*' found:"
         printf "%s\n" "${matches[@]}"
