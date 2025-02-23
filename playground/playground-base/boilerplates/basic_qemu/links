@@ -1,0 +1,5 @@
+edk2 how to run ovmf: https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF
+ovmf direct link: https://www.kraxel.org/repos/jenkins/edk2/edk2.git-ovmf-x64-0-20220719.209.gf0064ac3af.EOL.no.nore.updates.noarch.rpm
+ubuntu base: https://cdimage.ubuntu.com/ubuntu-base/releases/24.04/release/ubuntu-base-24.04.1-base-amd64.tar.gz
+mainline ubuntu kernel: https://kernel.ubuntu.com/mainline/v6.8/amd64/
+Also: https://kernel.ubuntu.com/mainline/v6.8/amd64/linux-image-unsigned-6.8.0-060800-generic_6.8.0-060800.202403131158_amd64.deb
