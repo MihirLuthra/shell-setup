@@ -101,3 +101,36 @@ alias jc='javac ${PLAYGROUND_JAVA_NAME}.java'
 alias jr='java ${PLAYGROUND_JAVA_NAME}'
 alias jcr='jc;jr;'
 alias j='nvim ${PLAYGROUND_JAVA_NAME}.java'
+
+BACKUP_PLAYGROUND="$PLAYGROUND_DIR/backup"
+
+pbackup() {
+    local old_set_x_setting=${-//[^x]/}
+    set -x
+    for inp_path in "$@"
+    do
+        if [ ! -e  "$inp_path" ]
+        then
+            >&2 echo "Input $inp_path doesn't exist"
+            if [ -z "$old_set_x_setting" ]
+            then
+                set +x
+            fi
+            return 1
+        fi
+    done
+
+    for inp_path in "$@"
+    do
+        local full_path="$(realpath "$inp_path")"
+        local new_path="${BACKUP_PLAYGROUND}${full_path}"
+        local new_path_dir="$(dirname "$new_path")"
+
+        mkdir -p "$new_path_dir"
+        mv "$full_path" "$new_path_dir"
+    done
+    if [ -z "$old_set_x_setting" ]
+    then
+        set +x
+    fi
+}
