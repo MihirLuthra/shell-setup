@@ -96,6 +96,36 @@ alias pgeneral='setup_playground "$HOME/playground/general" "general"'
 alias pqemu='setup_playground "$HOME/playground/qemu" "qemu"'
 alias pc='setup_playground "$HOME/playground/c" "c"'
 alias pcpp='setup_playground "$HOME/playground/cpp" "cpp"'
+pgit() {
+    local repo_url=$1
+    local clone_name=$2
+
+    if [ -z "$repo_url" ]
+    then
+        setup_playground "$PLAYGROUND_DIR/git" "general"
+        return
+    fi
+
+    cd "$PLAYGROUND_DIR"/git
+    git clone $repo_url $clone_name
+
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to clone repo $repo_url"
+        cd -
+        return 1
+    else
+        echo "Cloned $repo_url"
+    fi
+
+    if [ -n "$clone_name" ]
+    then
+        cd "$clone_name"
+    else
+        local repo_name=$(basename -s .git "$repo_url")
+        cd $repo_name
+    fi
+}
 
 alias jc='javac ${PLAYGROUND_JAVA_NAME}.java'
 alias jr='java ${PLAYGROUND_JAVA_NAME}'
@@ -127,7 +157,7 @@ pbackup() {
         local new_path_dir="$(dirname "$new_path")"
 
         mkdir -p "$new_path_dir"
-        mv "$full_path" "$new_path_dir"
+        cp -a "$full_path" "$new_path_dir"
     done
     if [ -z "$old_set_x_setting" ]
     then
