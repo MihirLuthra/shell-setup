@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sMY_REP
 
 if [ -n "$BASH_VERSION"  ]
 then
@@ -23,8 +23,8 @@ fi
 alias open=xdg-open
 alias sai='sudo apt install'
 NUM_CPUS="$(nproc --all)"
-export MY_REPOS_PATH="$HOME/repos"
-alias q="cd $MY_REPOS_PATH"
+export MY_PROJECTS_PATH="$HOME/projects"
+alias q="cd $MY_PROJECTS_PATH"
 alias i='[[ -e lib.rs ]] && vim lib.rs || vim init.lua'
 
 # cd to parent dir of given path
@@ -125,7 +125,7 @@ export PATH="$HOME/go/bin:$PATH"
 alias sc='nvim $SHELL_SETUP_PATH/shell.sh'
 
 # My tools
-. "$MY_TOOLS_PATH"/src/backup_rm.sh
+. "$MY_PROJECTS_PATH"/backup_rm/backup_rm.sh
 alias mt='cd "$MY_TOOLS_PATH"'
 export PATH="$PATH:$MY_TOOLS_PATH/bin"
 
@@ -134,3 +134,23 @@ export PATH="$PATH:$MY_TOOLS_PATH/bin"
 
 # Paths
 export PATH="$PATH:$HOME/.local/bin"
+
+# i3
+alias i3c="vim $HOME/.config/i3/config"
+alias i3b="cd $HOME/.config/i3blocks"
+
+# nvim
+alias n="cd $HOME/.config/nvim"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+_nvm_lazy_load() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+}
+
+nvm() { _nvm_lazy_load; nvm "$@"; }
+node() { _nvm_lazy_load; node "$@"; }
+npm()  { _nvm_lazy_load; npm  "$@"; }
+npx()  { _nvm_lazy_load; npx  "$@"; }
