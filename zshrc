@@ -40,3 +40,8 @@ export PLAYGROUND_DIR="$HOME/playground"
 source "$HOME/projects/shell-setup/shell.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# on ctrl+left arrow, go back a word
+bindkey '^[[1;5D' backward-word
+# on ctrl+right arrow, go back a word
+bindkey '^[[1;5C' forward-word
