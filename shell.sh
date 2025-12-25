@@ -167,3 +167,5 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
   echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > "$HOME/.ssh/agent.env"
   echo "export SSH_AGENT_PID=$SSH_AGENT_PID" >> "$HOME/.ssh/agent.env"
 fi
+
+alias ls='ls --color=auto'
