@@ -154,3 +154,16 @@ nvm() { _nvm_lazy_load; nvm "$@"; }
 node() { _nvm_lazy_load; node "$@"; }
 npm()  { _nvm_lazy_load; npm  "$@"; }
 npx()  { _nvm_lazy_load; npx  "$@"; }
+
+# Start a single global ssh-agent
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  if [ -f "$HOME/.ssh/agent.env" ]; then
+    source "$HOME/.ssh/agent.env" >/dev/null
+  fi
+fi
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" >/dev/null
+  echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > "$HOME/.ssh/agent.env"
+  echo "export SSH_AGENT_PID=$SSH_AGENT_PID" >> "$HOME/.ssh/agent.env"
+fi
