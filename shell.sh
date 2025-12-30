@@ -75,10 +75,12 @@ export CARGO_BUILD_JOBS=$( calc "int($NUM_CPUS/2)" )
 # it is desired to use almost max CPUs.
 if [ $NUM_CPUS -ge 4 ]
 then
-    MY_CARGO_BUILD_JOBS=$(calc "$NUM_CPUS-2")
+    MY_CARGO_BUILD_JOBS=$(calc "$NUM_CPUS-1")
 else
     MY_CARGO_BUILD_JOBS=$NUM_CPUS
 fi
+
+export CARGO_BUILD_JOBS=$MY_CARGO_BUILD_JOBS
 
 alias rtl='rustup toolchain list'
 alias rtal='rustup target list'
