@@ -27,13 +27,13 @@ setup_playground() {
     local name="$3"
 
     if [ $# -eq 2 ]; then
-        local target_dir="$( find "$dir" -maxdepth 1 -mindepth 1 -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2- | fzf --height=50% --reverse --cycle )"
+        local target="$( find "$dir" -maxdepth 1 -mindepth 1 -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2- | fzf --height=50% --reverse --cycle )"
     else
-        target_dir="$dir/$name"
+        target="$dir/$name"
     fi
 
-    if [ -z "$target_dir" ]; then
-        echo "target_dir was empty" >&2
+    if [ -z "$target" ]; then
+        echo "target was empty" >&2
         return 1
     fi
 
@@ -60,39 +60,44 @@ setup_playground() {
         return 1
     fi
 
-    if [ -d "$target_dir" ]; then
-        echo "Target directory already exists: $target_dir. Taking you there"
-        cd "$target_dir" || return 1
+    if [ -d "$target" ]; then
+        echo "Target directory already exists: $target. Taking you there"
+        cd "$target" || return 1
+        return 0
+    elif [ -f "$target" ]; then
+        cd "$(dirname "$target")"
+        xdg-open "$target" || return 1
         return 0
     fi
 
-    if [ -e "$target_dir" ]; then
-        echo "$target_dir exists but isn't a directory" >&2
+    if [ -e "$target" ]; then
+        echo "$target exists but isn't a directory" >&2
         return 1
     fi
 
-    mkdir -p "$target_dir"
-    cp -r "$boilerplate_dir/." "$target_dir"
+    mkdir -p "$target"
+    cp -r "$boilerplate_dir/." "$target"
 
     case "$lang" in
         java)
-            local new_target_path="$target_dir/$name.java"
-            mv "$target_dir"/Boilerplate.java "$new_target_path"
+            local new_target_path="$target/$name.java"
+            mv "$target"/Boilerplate.java "$new_target_path"
             sed -i "s/Boilerplate/$name/g" "$new_target_path"
-            echo "export PLAYGROUND_JAVA_NAME=$name" > "$target_dir/.envrc"
-            direnv allow "$target_dir"
+            echo "export PLAYGROUND_JAVA_NAME=$name" > "$target/.envrc"
+            direnv allow "$target"
             ;;
         *)
             ;;
     esac
 
-    cd "$target_dir" || return 1
+    cd "$target" || return 1
 }
 
 alias pgo='setup_playground "$HOME/playground/go" "go"'
 alias prust='setup_playground "$HOME/playground/rust" "rust"'
 alias pjava='setup_playground "$HOME/playground/java" "java-mvn"'
 alias pgeneral='setup_playground "$HOME/playground/general" "general"'
+alias preads='setup_playground "$HOME/playground/good-reads" "general"'
 alias pqemu='setup_playground "$HOME/playground/qemu" "qemu"'
 alias pc='setup_playground "$HOME/playground/c" "c"'
 alias pcpp='setup_playground "$HOME/playground/cpp" "cpp"'
