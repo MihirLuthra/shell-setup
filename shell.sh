@@ -169,3 +169,7 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
 fi
 
 alias ls='ls --color=auto'
+
+alias v='vim .'
+
+alias autorandr='PYTHONWARNINGS=ignore /usr/bin/autorandr'
