@@ -157,17 +157,20 @@ node() { _nvm_lazy_load; node "$@"; }
 npm()  { _nvm_lazy_load; npm  "$@"; }
 npx()  { _nvm_lazy_load; npx  "$@"; }
 
+SSH_AGENT_ENV_FILE="$XDG_RUNTIME_DIR/.ssh/agent.env"
+
 # Start a single global ssh-agent
 if [ -z "$SSH_AUTH_SOCK" ]; then
-  if [ -f "$HOME/.ssh/agent.env" ]; then
-    source "$HOME/.ssh/agent.env" >/dev/null
+  if [ -f "$SSH_AGENT_ENV_FILE" ]; then
+    source "$SSH_AGENT_ENV_FILE" >/dev/null
   fi
 fi
 
 if [ -z "$SSH_AUTH_SOCK" ]; then
+  mkdir -p "$(dirname $SSH_AGENT_ENV_FILE)"
   eval "$(ssh-agent -s)" >/dev/null
-  echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > "$HOME/.ssh/agent.env"
-  echo "export SSH_AGENT_PID=$SSH_AGENT_PID" >> "$HOME/.ssh/agent.env"
+  echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > "$SSH_AGENT_ENV_FILE"
+  echo "export SSH_AGENT_PID=$SSH_AGENT_PID" >> "$SSH_AGENT_ENV_FILE"
 fi
 
 alias ls='ls --color=auto'
