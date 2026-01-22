@@ -16,6 +16,12 @@ default_boilerplate_dirs[java-mvn]="$PLAYGROUND_DIR/boilerplates/basic_java_mvn"
 default_boilerplate_dirs[general]="$PLAYGROUND_DIR/boilerplates/general"
 default_boilerplate_dirs[qemu]="$PLAYGROUND_DIR/boilerplates/basic_qemu"
 
+fzf_dir() {
+    local dir="$1"
+
+    find "$dir" -maxdepth 1 -mindepth 1 -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2- | fzf --height=50% --reverse --cycle
+}
+
 setup_playground() {
     if [ $# -lt 2 ]; then
         echo "Usage: setup_playground <directory> <language> [<name> [<boilerplate_dir>]]"
@@ -27,7 +33,7 @@ setup_playground() {
     local name="$3"
 
     if [ $# -eq 2 ]; then
-        local target="$( find "$dir" -maxdepth 1 -mindepth 1 -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2- | fzf --height=50% --reverse --cycle )"
+        local target="$( fzf_dir "$dir" )"
     else
         target="$dir/$name"
     fi
@@ -101,6 +107,26 @@ alias preads='setup_playground "$HOME/playground/good-reads" "general"'
 alias pqemu='setup_playground "$HOME/playground/qemu" "qemu"'
 alias pc='setup_playground "$HOME/playground/c" "c"'
 alias pcpp='setup_playground "$HOME/playground/cpp" "cpp"'
+
+p() {
+    local arg1=$1
+    local arg2=$2
+
+    if [ -z "$arg1" ]
+    then
+        local dir="$( fzf_dir "$PLAYGROUND_DIR" )"
+        if [ -z "$dir" ]
+        then
+            return 0
+        else
+            cd "$dir"
+            return 0
+        fi
+    fi
+
+    setup_playground "$HOME/playground/$arg1" "general" $arg2
+}
+
 pgit() {
     local repo_url=$1
     local clone_name=$2
