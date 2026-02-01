@@ -182,3 +182,7 @@ alias autorandr='PYTHONWARNINGS=ignore /usr/bin/autorandr'
 alias scd="cd $SHELL_SETUP_PATH"
 
 . "$SHELL_SETUP_PATH/envtool.sh"
+
+export SYSTEMD_EDITOR=vim
+
+export TERM=xterm
