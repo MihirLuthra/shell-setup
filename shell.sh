@@ -186,3 +186,9 @@ alias scd="cd $SHELL_SETUP_PATH"
 export SYSTEMD_EDITOR=vim
 
 export TERM=xterm
+alias a='source ./venv/bin/activate'
+alias d='deactivate'
+
+alias ja='cd $PLAYGROUND_DIR/installs/jupyter-and-tools; a;'
+
+alias cik='clone-in-kitty --type=tab'

@@ -33,7 +33,14 @@ setup_playground() {
     local name="$3"
 
     if [ $# -eq 2 ]; then
-        local target="$( fzf_dir "$dir" )"
+        if [ ! -e "$dir" ]
+        then
+            mkdir -p "$dir"
+            cd "$dir"
+            return 0
+        else
+            local target="$( fzf_dir "$dir" )"
+        fi
     else
         target="$dir/$name"
     fi
@@ -107,6 +114,7 @@ alias preads='setup_playground "$HOME/playground/good-reads" "general"'
 alias pqemu='setup_playground "$HOME/playground/qemu" "qemu"'
 alias pc='setup_playground "$HOME/playground/c" "c"'
 alias pcpp='setup_playground "$HOME/playground/cpp" "cpp"'
+alias pp='cd $PLAYGROUND_DIR'
 
 p() {
     local arg1=$1
@@ -117,6 +125,7 @@ p() {
         local dir="$( fzf_dir "$PLAYGROUND_DIR" )"
         if [ -z "$dir" ]
         then
+            cd "$PLAYGROUND_DIR"
             return 0
         else
             cd "$dir"
