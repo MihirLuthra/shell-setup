@@ -140,6 +140,7 @@ pgit() {
     local repo_url=$1
     local clone_name=$2
 
+    mkdir -p "$PLAYGROUND_DIR/git"
     if [ -z "$repo_url" ]
     then
         setup_playground "$PLAYGROUND_DIR/git" "general"
